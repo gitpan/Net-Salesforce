@@ -34,6 +34,6 @@ resources:
   bugtracker: https://github.com/battlemidget/Net-Salesforce/issues
   homepage: https://github.com/battlemidget/Net-Salesforce
   repository: https://github.com/battlemidget/Net-Salesforce.git
-version: 0.01
+version: 0.02
 x_contributors:
   - 'Adam Stokes <adam.stokes@ubuntu.com>'

@@ -11,23 +11,34 @@ use Mojolicious::Lite;
 use Net::Salesforce;
 use DDP;
 
+app->helper(
+    'sf' => sub {
+        my $self = shift;
+        Net::Salesforce->new(
+            'key'          => $ENV{SFKEY},
+            'secret'       => $ENV{SFSECRET},
+            'redirect_uri' => 'https://localhost:8081/callback'
+        );
+    }
+);
+
+
 get '/' => sub {
   my ($c) = @_;
 } => 'index';
 
 post '/auth' => sub {
     my ($c) = @_;
-    my $sf = Net::Salesforce->new(
-        'key'          => $ENV{SFKEY},
-        'secret'       => $ENV{SFSECRET},
-        'redirect_uri' => 'https://localhost:8081/callback'
-    );
-    return $c->redirect_to($sf->authorize_url);
+    return $c->redirect_to(app->sf->authorize_url);
 };
 
 get '/callback' => sub {
   my ($c) = @_;
-  p $c;
+  my $authorization_code = $c->param('code');
+  p $authorization_code;
+  my $payload = app->sf->authenticate($authorization_code);
+  p $payload;
+  $c->stash(oauth => $payload);
 } => 'authenticated';
 
 app->start;
