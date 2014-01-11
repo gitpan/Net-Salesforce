@@ -9,6 +9,7 @@ BEGIN { unshift @INC, "$FindBin::Bin/../lib" }
 
 use Mojolicious::Lite;
 use Net::Salesforce;
+use Mojo::URL;
 use DDP;
 
 app->helper(
@@ -17,11 +18,11 @@ app->helper(
         Net::Salesforce->new(
             'key'          => $ENV{SFKEY},
             'secret'       => $ENV{SFSECRET},
-            'redirect_uri' => 'https://localhost:8081/callback'
+            'redirect_uri' => 'https://localhost:8081/callback',
+            'api_host'      => 'https://cs7.salesforce.com/',
         );
     }
 );
-
 
 get '/' => sub {
   my ($c) = @_;
@@ -35,9 +36,7 @@ post '/auth' => sub {
 get '/callback' => sub {
   my ($c) = @_;
   my $authorization_code = $c->param('code');
-  p $authorization_code;
   my $payload = app->sf->authenticate($authorization_code);
-  p $payload;
   $c->stash(oauth => $payload);
 } => 'authenticated';
 
@@ -55,8 +54,12 @@ __DATA__
 </html>
 
 @@ authenticated.html.ep
+% use DDP;
+% p $oauth;
 <html><head><title>Callback</title></head>
 <body>
 <h1>Authenticated</h1>
+<p>Your access_token is: <%= $oauth->{access_token} %></p>
+<p>Your refresh_token is: <%= $oauth->{refresh_token} %></p>
 </body>
 </html>

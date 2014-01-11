@@ -9,6 +9,7 @@ README
 cpanfile
 dist.ini
 eg/auth.pl
+eg/refresh_token.pl
 lib/Net/Salesforce.pm
 t/basic.t
 t/manifest.t

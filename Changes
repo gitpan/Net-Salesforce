@@ -1,10 +1,6 @@
 Revision history for Net-Salesforce
 
-0.02  2014-01-07 23:25:32 EST
-	- make sure payload returns proper access_token
-	- finalize authenticate routine
-
-0.01  2014-01-07 16:30:28 EST
-        - Initial release
-	- Supports api scope
+1.0.0  2014-01-11 14:44:01 EST
+	- Add refresh_token api
+	- Add example on capturing a refresh_token
 	- OAuth v2

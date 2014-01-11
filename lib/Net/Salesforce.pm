@@ -6,14 +6,24 @@ use Mojo::URL;
 use Mojo::Parameters;
 use Digest::SHA;
 
-our $VERSION = '0.02';
+our $VERSION = '1.0.0';
 
 has 'key';
+
 has 'secret';
+
 has 'redirect_uri' => 'https://localhost:8081/callback';
-has 'access_token_url' => 'https://na15.salesforce.com/services/oauth2/token';
-has 'scope' => 'api';
+
+has 'api_host' => 'https://na15.salesforce.com/';
+
+has 'access_token_path' => 'services/oauth2/token';
+
+has 'authorize_path' => 'services/oauth2/authorize';
+
+has 'scope' => 'api refresh_token';
+
 has 'response_type' => 'code';
+
 has 'params' => sub {
     my $self = shift;
     return {
@@ -48,7 +58,8 @@ sub verify_signature {
 }
 
 sub refresh {
-    my $self = shift;
+    my ($self, $refresh_token) = @_;
+    $self->params->{refresh_token} = $refresh_token;
     $self->params->{grant_type} = 'refresh_token';
     return $self->oauth2;
 }
@@ -69,23 +80,30 @@ sub authenticate {
 sub authorize_url {
     my $self = shift;
     $self->params->{response_type} = 'code';
-    my $url =
-      Mojo::URL->new('https://na15.salesforce.com/services/oauth2/authorize')
+    my $url = Mojo::URL->new($self->api_host)
+      ->path($self->authorize_path)
       ->query($self->params);
+    return $url->to_string;
+}
+
+sub access_token_url {
+    my $self = shift;
+    my $url  = Mojo::URL->new($self->api_host)->path($self->access_token_path);
     return $url->to_string;
 }
 
 sub oauth2 {
     my $self = shift;
 
-    my $tx = $self->ua->post($self->access_token_url => form => $self->params);
+    my $tx =
+      $self->ua->post($self->access_token_url => form => $self->params);
 
     die $tx->res->body unless $tx->success;
 
     my $payload = $self->json->decode($tx->res->body);
 
-    # TODO: fix verify signature
-    # die "Unable to verify signature" unless $self->verify_signature($payload);
+  # TODO: fix verify signature
+  # die "Unable to verify signature" unless $self->verify_signature($payload);
 
     return $payload;
 }
@@ -115,21 +133,42 @@ Net::Salesforce is an authentication module for Salesforce OAuth 2.
 
 =head1 ATTRIBUTES
 
-=head2 authorize_url
+=head2 api_host
 
-=head2 key
+Returns a L<Mojo::URL> of the Salesforce api host, defaults to
+https://na15.salesforce.com/
+
+=head2 authorize_path
+
+Endpoint to Salesforce's authorize page.
+
+=head2 access_token_path
+
+Endpoint to Salesforce's access token page
 
 =head2 params
 
-=head2 password
+Form parameters attribute
 
 =head2 redirect_uri
 
+Callback URI defined in your Salesforce application
+
 =head2 response_type
+
+Response type for authorization callback
 
 =head2 scope
 
+Scopes available as defined by the Salesforce application.
+
 =head2 secret
+
+Acts as Salesforce client_secret
+
+=head2 key
+
+Acts as Salesforce client_key
 
 =head2 ua
 
@@ -147,9 +186,20 @@ A L<Mojo::JSON> object.
 
 =head2 oauth2
 
+=head2 authorize_url
+
 =head2 access_token_url
 
 =head2 authenticate
+
+=head2 password
+
+=head1 INSTALL
+
+  $ cpanm git://github.com/battlemidget/Net-Salesforce.git
+
+If you'd wish to try out the latest code base you can do so with above
+command.
 
 =head1 AUTHOR
 
