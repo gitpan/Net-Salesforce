@@ -1,4 +1,7 @@
 package Net::Salesforce;
+BEGIN {
+  $Net::Salesforce::AUTHORITY = 'cpan:ADAMJS';
+}
 
 use Mojo::Base -base;
 use Mojo::UserAgent;
@@ -109,13 +112,20 @@ sub oauth2 {
 }
 
 1;
+
 __END__
+
+=pod
 
 =encoding utf-8
 
 =head1 NAME
 
-Net::Salesforce - Authentication against Salesforce OAuth 2 endpoints.
+Net::Salesforce
+
+=head1 VERSION
+
+version 1.100
 
 =head1 SYNOPSIS
 
@@ -130,6 +140,10 @@ Net::Salesforce - Authentication against Salesforce OAuth 2 endpoints.
 =head1 DESCRIPTION
 
 Net::Salesforce is an authentication module for Salesforce OAuth 2.
+
+=head1 NAME
+
+Net::Salesforce - Authentication against Salesforce OAuth 2 endpoints.
 
 =head1 ATTRIBUTES
 
@@ -215,5 +229,16 @@ This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
 
 =head1 SEE ALSO
+
+=head1 AUTHOR
+
+Adam Stokes <adamjs@cpan.org>
+
+=head1 COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2014 by Adam Stokes.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
 
 =cut
