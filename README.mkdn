@@ -1,10 +1,10 @@
 # NAME
 
-Net::Salesforce
+Net::Salesforce - An authentication module for Salesforce OAuth 2.
 
 # VERSION
 
-version 1.100
+version 1.101
 
 # SYNOPSIS
 
@@ -15,14 +15,6 @@ version 1.100
         'secret'       => $ENV{SFSECRET},
         'redirect_uri' => 'https://localhost:8081/callback'
     );
-
-# DESCRIPTION
-
-Net::Salesforce is an authentication module for Salesforce OAuth 2.
-
-# NAME
-
-Net::Salesforce - Authentication against Salesforce OAuth 2 endpoints.
 
 # ATTRIBUTES
 
@@ -86,28 +78,6 @@ A [Mojo::JSON](https://metacpan.org/pod/Mojo::JSON) object.
 ## authenticate
 
 ## password
-
-# INSTALL
-
-    $ cpanm git://github.com/battlemidget/Net-Salesforce.git
-
-If you'd wish to try out the latest code base you can do so with above
-command.
-
-# AUTHOR
-
-Adam Stokes <adamjs@cpan.org>
-
-# COPYRIGHT
-
-Copyright 2014- Adam Stokes
-
-# LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-# SEE ALSO
 
 # AUTHOR
 

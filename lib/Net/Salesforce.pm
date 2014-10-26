@@ -2,14 +2,14 @@ package Net::Salesforce;
 BEGIN {
   $Net::Salesforce::AUTHORITY = 'cpan:ADAMJS';
 }
+$Net::Salesforce::VERSION = '1.101';
+# ABSTRACT: An authentication module for Salesforce OAuth 2.
 
 use Mojo::Base -base;
 use Mojo::UserAgent;
 use Mojo::URL;
 use Mojo::Parameters;
 use Digest::SHA;
-
-our $VERSION = '1.0.0';
 
 has 'key';
 
@@ -45,7 +45,7 @@ has 'json' => sub {
 has 'ua' => sub {
     my $self = shift;
     my $ua = Mojo::UserAgent->new;
-    $ua->transactor->name("Net::Salesforce/$VERSION");
+    $ua->transactor->name("Net::Salesforce/$Net::Salesforce::VERSION");
     return $ua;
 };
 
@@ -117,15 +117,15 @@ __END__
 
 =pod
 
-=encoding utf-8
+=encoding UTF-8
 
 =head1 NAME
 
-Net::Salesforce
+Net::Salesforce - An authentication module for Salesforce OAuth 2.
 
 =head1 VERSION
 
-version 1.100
+version 1.101
 
 =head1 SYNOPSIS
 
@@ -136,14 +136,6 @@ version 1.100
       'secret'       => $ENV{SFSECRET},
       'redirect_uri' => 'https://localhost:8081/callback'
   );
-
-=head1 DESCRIPTION
-
-Net::Salesforce is an authentication module for Salesforce OAuth 2.
-
-=head1 NAME
-
-Net::Salesforce - Authentication against Salesforce OAuth 2 endpoints.
 
 =head1 ATTRIBUTES
 
@@ -207,28 +199,6 @@ A L<Mojo::JSON> object.
 =head2 authenticate
 
 =head2 password
-
-=head1 INSTALL
-
-  $ cpanm git://github.com/battlemidget/Net-Salesforce.git
-
-If you'd wish to try out the latest code base you can do so with above
-command.
-
-=head1 AUTHOR
-
-Adam Stokes E<lt>adamjs@cpan.orgE<gt>
-
-=head1 COPYRIGHT
-
-Copyright 2014- Adam Stokes
-
-=head1 LICENSE
-
-This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself.
-
-=head1 SEE ALSO
 
 =head1 AUTHOR
 

@@ -1,5 +1,5 @@
 ---
-abstract: 'Authentication against Salesforce OAuth 2 endpoints.'
+abstract: 'An authentication module for Salesforce OAuth 2.'
 author:
   - 'Adam Stokes <adamjs@cpan.org>'
 build_requires:
@@ -33,5 +33,5 @@ requires:
 resources:
   homepage: https://github.com/battlemidget/p5-net-salesforce
   repository: https://github.com/battlemidget/p5-net-salesforce.git
-version: '1.100'
+version: '1.101'
 x_authority: cpan:ADAMJS
